@@ -1,0 +1,13 @@
+---
+- import_tasks: cleanup.yml
+  when: postgres_reset_db | bool
+
+- import_tasks: init.yml
+
+- import_tasks: ssl.yml
+
+- import_tasks: config.yml
+
+- import_tasks: run.yml
+
+- import_tasks: users.yml

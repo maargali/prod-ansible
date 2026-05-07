@@ -1,0 +1,23 @@
+- name: Generate self-signed cert
+  shell: |
+    openssl req -new -x509 -days 365 -nodes \
+    -out server.crt \
+    -keyout server.key \
+    -subj "/CN=localhost"
+  args:
+    chdir: "{{ postgres_cert_dir }}"
+    creates: "{{ postgres_cert_dir }}/server.key"
+
+- name: Set key permissions
+  file:
+    path: "{{ postgres_cert_dir }}/server.key"
+    owner: 999
+    group: 999
+    mode: '0600'
+
+- name: Set cert permissions
+  file:
+    path: "{{ postgres_cert_dir }}/server.crt"
+    owner: 999
+    group: 999
+    mode: '0644'

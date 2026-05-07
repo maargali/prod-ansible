@@ -1,0 +1,16 @@
+postgres_container_name: prod_db
+postgres_image: postgres:15
+
+postgres_db: fm_prod
+postgres_user: "jwe83k*dd9&kls"
+postgres_password: uwldx)nxlc&1
+
+postgres_port: 5432
+postgres_network: prod
+
+postgres_data_dir: /opt/maargali/postgres/data
+postgres_cert_dir: /opt/maargali/postgres/certs
+postgres_config_dir: /opt/maargali/postgres/config
+
+postgres_enable_ssl: true
+postgres_reset_db: false   # ⚠️ safety switch

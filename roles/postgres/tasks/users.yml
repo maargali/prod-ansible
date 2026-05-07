@@ -1,0 +1,29 @@
+---
+- name: Wait for PostgreSQL
+  wait_for:
+    port: 5432
+    timeout: 60
+
+- name: Verify SSL status
+  command:
+    argv:
+      - docker
+      - exec
+      - -e
+      - "PGPASSWORD={{ postgres_password }}"
+      - "{{ postgres_container_name }}"
+      - psql
+      - -h
+      - "127.0.0.1"
+      - -U
+      - "{{ postgres_user }}"
+      - -d
+      - "{{ postgres_db }}"
+      - -t
+      - -c
+      - "SHOW ssl;"
+  register: postgres_ssl_status
+  changed_when: false
+
+- debug:
+    msg: "PostgreSQL SSL status: {{ postgres_ssl_status.stdout }}"

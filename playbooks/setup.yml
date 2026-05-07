@@ -1,0 +1,16 @@
+- name: Setup VPS
+  hosts: prod
+  become: yes
+
+  roles:
+    - common
+    - docker
+    - postgres
+    - nginx
+    - certbot   # fix typo
+
+  tasks:
+    - name: Ensure docker network exists
+      community.docker.docker_network:
+        name: prod
+        state: present

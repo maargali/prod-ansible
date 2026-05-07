@@ -1,0 +1,25 @@
+- name: Run PostgreSQL container
+  community.docker.docker_container:
+    name: "{{ postgres_container_name }}"
+    image: "{{ postgres_image }}"
+    state: started
+    restart_policy: always
+
+    networks:
+      - name: "{{ postgres_network }}"
+
+    ports:
+      - "{{ postgres_port }}:5432"
+
+    volumes:
+      - "{{ postgres_data_dir }}:/var/lib/postgresql/data"
+      - "{{ postgres_cert_dir }}:/var/lib/postgresql/certs"
+      - "{{ postgres_config_dir }}:/etc/postgresql/custom"
+    command: >
+      postgres
+      -c config_file=/etc/postgresql/custom/postgresql.conf
+
+    env:
+      POSTGRES_DB: "{{ postgres_db }}"
+      POSTGRES_USER: "{{ postgres_user }}"
+      POSTGRES_PASSWORD: "{{ postgres_password }}"

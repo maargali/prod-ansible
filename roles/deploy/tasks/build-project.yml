@@ -1,0 +1,47 @@
+- name: Ensure app directory exists
+  file:
+    path: "{{ app_base_dir }}/{{ project }}"
+    state: directory
+
+# -------------------------
+# Clone repo
+# -------------------------
+- name: Clone repository
+  git:
+    repo: "{{ env_vars.GIT_REPO }}"
+    dest: "{{ app_base_dir }}/{{ project }}"
+    version: "{{ env_vars.GIT_BRANCH }}"
+    force: yes
+
+# -------------------------
+# Build Docker image
+# -------------------------
+- name: Build Docker image
+  command: >
+    docker build
+    -t {{ env_vars.DOCKER_IMAGE }}:{{ env_vars.DOCKER_TAG }}
+    .
+  args:
+    chdir: "{{ app_base_dir }}/{{ project }}"
+
+# -------------------------
+# Remove existing container
+# -------------------------
+- name: Remove old container
+  command: docker rm -f {{ env_vars.CONTAINER_NAME }}
+  ignore_errors: yes
+
+# -------------------------
+# Run container
+# -------------------------
+- name: Run container
+  command: >
+    docker run -d
+    --name {{ env_vars.CONTAINER_NAME }}
+    --network pre_prod
+    -p 8080:8080
+    --env-file {{ config_dir }}/{{ project }}.runtime.env
+    -v /etc/timezone:/etc/timezone:ro
+    -v /etc/localtime:/etc/localtime:ro
+    --restart always
+    {{ env_vars.DOCKER_IMAGE }}:{{ env_vars.DOCKER_TAG }}
