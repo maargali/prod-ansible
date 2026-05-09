@@ -1,0 +1,12 @@
+backend_repo: "https://github.com/maargali/fuelman.git"
+backend_branch: "main"
+
+backend_app_dir: "/opt/maargali/backend"
+
+backend_container_name: "fuelmanAppProd"
+backend_image_name: "fuelman-app"
+
+backend_network: "prod"
+
+backend_host_port: 8080
+backend_container_port: 8080

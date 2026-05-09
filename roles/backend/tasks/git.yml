@@ -1,0 +1,6 @@
+- name: Clone backend repository
+  git:
+    repo: "{{ backend_repo }}"
+    dest: "{{ backend_app_dir }}"
+    version: "{{ backend_branch }}"
+    force: yes

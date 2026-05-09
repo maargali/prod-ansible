@@ -1,0 +1,39 @@
+- name: Copy backend Dockerfile
+  template:
+    src: Dockerfile.j2
+    dest: "{{ backend_app_dir }}/Dockerfile"
+
+- name: Build backend Docker image
+  community.docker.docker_image:
+    name: "{{ backend_image_name }}"
+    source: build
+
+    build:
+      path: "{{ backend_app_dir }}"
+
+- name: Run backend container
+  community.docker.docker_container:
+    name: "{{ backend_container_name }}"
+    image: "{{ backend_image_name }}"
+
+    state: started
+    restart_policy: always
+    recreate: true
+
+    networks:
+      - name: "{{ backend_network }}"
+
+    ports:
+      - "{{ backend_host_port }}:8080"
+
+    env:
+      TZ: Asia/Kolkata
+
+      JAVA_OPTS: >-
+        -Dspring.profiles.active=prod
+        -Dlogging.level.root=INFO
+        -Dfleet.endpoint.url=https://your-api-url
+        -Dapp.database.url=jdbc:postgresql://{{ postgres_container_name }}:{{ postgres_port }}/{{ postgres_db }}
+        -Dapp.database.user={{ postgres_user }}
+        -Dapp.database.pass={{ postgres_password }}
+        -Duser.timezone=Asia/Kolkata

@@ -1,0 +1,9 @@
+- name: Maven clean package
+  command:
+    argv:
+      - mvn
+      - clean
+      - package
+      - -DskipTests
+  args:
+    chdir: "{{ backend_app_dir }}"
