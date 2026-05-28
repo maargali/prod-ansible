@@ -1,0 +1,6 @@
+- name: Clone frontend repo
+  git:
+    repo: "{{ frontend_repo }}"
+    dest: "{{ frontend_app_dir }}"
+    version: "{{ frontend_branch }}"
+    force: true

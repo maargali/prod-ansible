@@ -1,0 +1,14 @@
+- name: Run frontend container
+  community.docker.docker_container:
+    name: "{{ frontend_container_name }}"
+    image: "{{ frontend_image_name }}"
+
+    state: started
+    restart_policy: always
+    recreate: true
+
+    networks:
+      - name: "{{ frontend_network }}"
+
+    ports:
+      - "{{ frontend_host_port }}:80"

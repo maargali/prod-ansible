@@ -1,0 +1,25 @@
+- name: Install certbot
+  apt:
+    name: certbot
+    state: present
+    update_cache: true
+
+- name: Stop nginx if running
+  service:
+    name: nginx
+    state: stopped
+  ignore_errors: true
+
+- name: Generate SSL certificates
+  command: >
+    certbot certonly
+    --standalone
+    --non-interactive
+    --agree-tos
+    --email {{ certbot_email }}
+    {% for domain in certbot_domains %}
+    -d {{ domain }}
+    {% endfor %}
+
+  args:
+    creates: "/etc/letsencrypt/live/{{ certbot_domains[0] }}/fullchain.pem"

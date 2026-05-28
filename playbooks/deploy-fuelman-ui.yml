@@ -1,0 +1,9 @@
+- hosts: prod
+  become: true
+
+  vars_files:
+    - ../inventory/prod/group_vars/frontend/fuelman-ui.yml
+
+  roles:
+    - docker
+    - frontend

@@ -1,0 +1,13 @@
+frontend_branch: "main"
+
+frontend_network: "prod"
+
+frontend_container_port: 80
+
+frontend_app_base_dir: "/opt/maargali/frontend"
+
+frontend_app_dir: "{{ frontend_app_base_dir }}/{{ frontend_name }}"
+
+frontend_node_version: "20"
+
+frontend_build_dir: "build"

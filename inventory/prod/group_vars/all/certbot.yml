@@ -1,0 +1,7 @@
+certbot_domains:
+  - fuelman.in
+  - www.fuelman.in
+  - anchor.fuelman.in
+  - fleet.fuelman.in
+
+certbot_email: admin@fuelman.in

@@ -1,0 +1,11 @@
+- name: Create nginx config directory
+  file:
+    path: /opt/maargali/nginx
+    state: directory
+
+- name: Generate nginx.conf
+  template:
+    src: nginx.conf.j2
+    dest: /opt/maargali/nginx/nginx.conf
+
+  notify: Restart nginx container

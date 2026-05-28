@@ -1,0 +1,7 @@
+- name: Set frontend app directory
+  set_fact:
+    frontend_app_dir: "{{ frontend_app_base_dir }}/{{ frontend_name }}"
+
+- import_tasks: git.yml
+- import_tasks: docker-build.yml
+- import_tasks: docker-run.yml

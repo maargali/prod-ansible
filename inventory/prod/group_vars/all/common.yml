@@ -1,0 +1,6 @@
+docker_network: prod
+
+timezone: Asia/Kolkata
+
+app_base_dir: /opt/maargali/apps
+config_dir: /opt/maargali/prod_ansible/config

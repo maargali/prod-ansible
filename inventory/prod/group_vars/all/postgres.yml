@@ -1,0 +1,8 @@
+postgres_db: fm_prod
+postgres_user: "jwe83k*dd9&kls"
+postgres_password: "uwldx)nxlc&1"
+postgres_container_name: prod_db
+postgres_host: prod_db
+postgres_network: prod
+postgres_port: 5432
+
