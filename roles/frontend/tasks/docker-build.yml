@@ -17,7 +17,7 @@
   community.docker.docker_image:
     name: "{{ frontend_image_name }}"
     source: build
-
+    force_source: true
     build:
       path: "{{ frontend_app_dir }}"
       args: "{{ frontend_build_args }}"
