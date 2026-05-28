@@ -3,14 +3,20 @@
     src: Dockerfile.j2
     dest: "{{ backend_app_dir }}/Dockerfile"
 
+- name: Copy .dockerignore
+  template:
+    src: dockerignore.j2
+    dest: "{{ backend_app_dir }}/.dockerignore"
+
 - name: Build backend Docker image
   community.docker.docker_image:
     name: "{{ backend_image_name }}"
     source: build
-
+    
     build:
       path: "{{ backend_app_dir }}"
-
+      args:
+        JAR_FILE: "target/fuelman-1.0.0.jar"
 - name: Run backend container
   community.docker.docker_container:
     name: "{{ backend_container_name }}"
