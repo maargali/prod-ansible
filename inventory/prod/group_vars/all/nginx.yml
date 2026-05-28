@@ -3,10 +3,10 @@ nginx_vhosts:
   - name: fuelman
 
     server_names:
-      - fuelman.in
-      - www.fuelman.in
+      - fuelman.shop
+      - www.fuelman.shop
 
-    primary_domain: fuelman.in
+    primary_domain: fuelman.shop
 
     nginx_locations:
       - path: /
