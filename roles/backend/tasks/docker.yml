@@ -29,11 +29,4 @@
     env:
       TZ: Asia/Kolkata
 
-      JAVA_OPTS: >-
-        -Dspring.profiles.active=prod
-        -Dlogging.level.root=INFO
-        -Dfleet.endpoint.url=https://your-api-url
-        -Dapp.database.url=jdbc:postgresql://{{ postgres_container_name }}:{{ postgres_port }}/{{ postgres_db }}
-        -Dapp.database.user={{ postgres_user }}
-        -Dapp.database.pass={{ postgres_password }}
-        -Duser.timezone=Asia/Kolkata
+      JAVA_OPTS: "{{ backend_java_opts }}" 
