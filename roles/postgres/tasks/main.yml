@@ -1,13 +1,14 @@
----
 - import_tasks: cleanup.yml
   when: postgres_reset_db | bool
 
-- import_tasks: init.yml
+- import_tasks: init.yml      # Directories, configs, certs
 
-- import_tasks: ssl.yml
+- import_tasks: run.yml       # Start PostgreSQL + Wait for pg_isready
 
-- import_tasks: config.yml
+- import_tasks: database.yml  # Create database if missing
 
-- import_tasks: run.yml
+- import_tasks: users.yml     # Create roles/users
 
-- import_tasks: users.yml
+- import_tasks: config.yml    # PostgreSQL configuration
+
+- import_tasks: ssl.yml       # Verify SSL
