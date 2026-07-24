@@ -28,9 +28,8 @@ server {
 
     server_name {{ vhost.server_names | join(' ') }};
 
-    ssl_certificate /etc/letsencrypt/live/{{ vhost.primary_domain }}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/{{ vhost.primary_domain }}/privkey.pem;
-
+    ssl_certificate /etc/letsencrypt/live/{{ vhost.cert_name | default(vhost.primary_domain) }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ vhost.cert_name | default(vhost.primary_domain) }}/privkey.pem;
 {% for location in vhost.nginx_locations %}
 
     location {{ location.path }} {
