@@ -1,3 +1,4 @@
+# this is not required, as this step is moved to dockerfile as multi stage build
 - name: Maven clean package
   command:
     argv:

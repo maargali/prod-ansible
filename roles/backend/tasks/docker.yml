@@ -8,15 +8,28 @@
     src: dockerignore.j2
     dest: "{{ backend_app_dir }}/.dockerignore"
 
+- name: Build backend Docker image (Debug)
+  ansible.builtin.shell: |
+    docker build \
+      --no-cache \
+      --progress=plain \
+      --build-arg JAR_FILE={{ app_jar_file }} \
+      -t {{ backend_image_name }} \
+      . 2>&1 | tee /tmp/docker-build.log
+  args:
+    chdir: "{{ backend_app_dir }}"
+  when: docker_debug | default(false)
+
 - name: Build backend Docker image
   community.docker.docker_image:
     name: "{{ backend_image_name }}"
     source: build
-    
     build:
       path: "{{ backend_app_dir }}"
       args:
-        JAR_FILE: "target/fuelman-1.0.0.jar"
+        JAR_FILE: "{{ app_jar_file }}"
+  when: not (docker_debug | default(false))
+
 - name: Run backend container
   community.docker.docker_container:
     name: "{{ backend_container_name }}"

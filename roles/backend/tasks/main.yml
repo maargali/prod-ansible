@@ -1,4 +1,5 @@
 ---
 - import_tasks: git.yml
-- import_tasks: build.yml
+  # build.yml is not required, since maven run cmd runs inside dockerfile as multi stage build
+  #- import_tasks: build.yml
 - import_tasks: docker.yml
