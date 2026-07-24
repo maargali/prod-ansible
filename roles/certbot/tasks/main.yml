@@ -10,12 +10,14 @@
     state: stopped
   ignore_errors: true
 
-- name: Generate SSL certificates
+- name: Generate or Update SSL certificates
   command: >
     certbot certonly
     --standalone
     --non-interactive
     --agree-tos
+    --expand
+    --cert-name {{ certbot_cert_name }}
     --email {{ certbot_email }}
     {% for domain in certbot_domains %}
     -d {{ domain }}
@@ -23,3 +25,8 @@
 
   args:
     creates: "/etc/letsencrypt/live/{{ certbot_domains[0] }}/fullchain.pem"
+- name: Start nginx
+  service:
+    name: nginx
+    state: started
+    enabled: true
