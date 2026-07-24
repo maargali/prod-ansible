@@ -1,0 +1,11 @@
+- name: Stop host nginx service if installed
+  ansible.builtin.service:
+    name: nginx
+    state: stopped
+  ignore_errors: true
+
+- name: Disable host nginx service
+  ansible.builtin.service:
+    name: nginx
+    enabled: false
+  ignore_errors: true
