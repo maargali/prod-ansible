@@ -3,11 +3,11 @@
   become: yes
 
   roles:
-    - common
+    #- common
     - docker
     - postgres
+    - certbot
     - nginx
-    - certbot   # fix typo
 
   tasks:
     - name: Ensure docker network exists
