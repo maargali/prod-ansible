@@ -1,13 +1,25 @@
-FROM eclipse-temurin:17-jdk-alpine
-
-RUN apk --no-cache add curl net-tools
+FROM maven:3.9-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
-ARG JAR_FILE=target/fuelman-1.0.0.jar
+COPY pom.xml .
+COPY src ./src
 
-COPY ${JAR_FILE} app.jar
+RUN mvn clean package -DskipTests
+
+
+FROM eclipse-temurin:17-jre-alpine
+
+RUN apk --no-cache add curl net-tools
+
+ARG JAR_FILE
+
+RUN echo "JAR_FILE=[$JAR_FILE]"
+
+WORKDIR /app
+
+COPY --from=build app/${JAR_FILE} app.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
+ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -jar /app/app.jar"]
