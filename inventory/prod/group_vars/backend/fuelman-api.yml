@@ -6,13 +6,16 @@
 
 backend_name: "fuelman-api"
 
-backend_repo: "https://github.com/maargali/fuelman.git"
+backend_repo: "git@github.com:maargali/fuelman.git"
 
 
 backend_container_name: fuelmanAppProd
 backend_image_name:  "fuelman-app"
 
 backend_host_port: 8080
+
+app_name: fuelman
+app_jar_file: "target/{{ app_name }}-1.0.0.jar"
 
 backend_schema: fman
 
